@@ -31,8 +31,8 @@ main {
 
 .pokemon__image {
   position: absolute;
-  bottom: 55%;
-  left: 50%;
+  bottom: 75%;
+  left: 52%;
   transform: translate(-63%, 20%);
   height: 18%;
 }
@@ -41,13 +41,14 @@ main {
   position: absolute;
   font-weight: 600;
   color: #aaa;
-  top: 54.5%;
-  right: 27%;
+  top: 35.5%;
+  right: 32.5%;
   font-size: clamp(8px, 5vw, 25px);
+  color: white;
 }
 
 .pokemon__name {
-  color: #3a444d;
+  color: white;
   text-transform: capitalize;
 }
 

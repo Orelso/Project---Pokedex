@@ -10,8 +10,16 @@ const buttonNext = document.querySelector('.btn-next');
 let searchPokemon = 1;
 
 const fetchPokemon = async (pokemon) => {
-    if (pokemon <= 151) {
-      const APIResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
+    let url;
+  
+    if (typeof pokemon === 'number' && pokemon <= 151) {
+      url = `https://pokeapi.co/api/v2/pokemon/${pokemon}`;
+    } else if (typeof pokemon === 'string' && pokemon <= 151) {
+      url = `https://pokeapi.co/api/v2/pokemon/${pokemon.toLowerCase()}`;
+    }
+  
+    if (url) {
+      const APIResponse = await fetch(url);
   
       if (APIResponse.status === 200) {
         const data = await APIResponse.json();
@@ -19,6 +27,8 @@ const fetchPokemon = async (pokemon) => {
       }
     }
   }
+  
+  
 
 const renderPokemon = async (pokemon) => {
 
@@ -36,16 +46,14 @@ const renderPokemon = async (pokemon) => {
     searchPokemon = data.id;
   } else {
     pokemonImage.style.display = 'none';
-    pokemonName.innerHTML = 'I only have access to the first 151 pokemon';
-    pokemonName.style.fontSize = '10px';
-    pokemonName.style.color = 'red';
+    pokemonName.innerHTML = 'Not found :c';
     pokemonNumber.innerHTML = '';
   }
 }
 
 form.addEventListener('submit', (event) => {
   event.preventDefault();
-  renderPokemon(input.value.toLowerCase());
+  renderPokemon(input.value);
 });
 
 buttonPrev.addEventListener('click', () => {
