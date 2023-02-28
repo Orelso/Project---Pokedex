@@ -14,8 +14,17 @@ const fetchPokemon = async (pokemon) => {
   
     if (typeof pokemon === 'number' && pokemon <= 151) {
       url = `https://pokeapi.co/api/v2/pokemon/${pokemon}`;
-    } else if (typeof pokemon === 'string' && pokemon <= 151) {
-      url = `https://pokeapi.co/api/v2/pokemon/${pokemon.toLowerCase()}`;
+    } else if (typeof pokemon === 'string' && pokemon.length > 0) {
+      const lowercasePokemon = pokemon.toLowerCase();
+      const APIResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${lowercasePokemon}`);
+  
+      if (APIResponse.status === 200) {
+        const data = await APIResponse.json();
+  
+        if (data.id <= 151) {
+          url = `https://pokeapi.co/api/v2/pokemon/${lowercasePokemon}`;
+        }
+      }
     }
   
     if (url) {
@@ -26,8 +35,12 @@ const fetchPokemon = async (pokemon) => {
         return data;
       }
     }
+  
+    return null;
   }
   
+  
+
   
 
 const renderPokemon = async (pokemon) => {
@@ -46,8 +59,9 @@ const renderPokemon = async (pokemon) => {
     searchPokemon = data.id;
   } else {
     pokemonImage.style.display = 'none';
-    pokemonName.innerHTML = 'Not found :c';
-    pokemonNumber.innerHTML = '';
+    pokemonName.innerHTML = 'Only the original 151';
+    pokemonName.style.cssText = 'font-size: 25px; color: red; text-align: center;';
+
   }
 }
 
